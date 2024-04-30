@@ -18,6 +18,7 @@ const App = () => {
 
   const [nameValue, setNameValue] = useState("");
   const [supplierIdValue, setsupplierIdValue] = useState("");
+  const [productId, setProductId] = useState("");
 
   const getData = async () => {
     try {
@@ -41,6 +42,20 @@ const App = () => {
     e.preventDefault();
 
     await axios.post("https://northwind.vercel.app/api/products", {
+      name: nameValue,
+      supplierId: supplierIdValue,
+    });
+    getData();
+  };
+
+  const editData = (name, supplierdId, id) => {
+    setNameValue(name);
+    setsupplierIdValue(supplierdId);
+    setProductId(id);
+  };
+
+  const handleUpdate = async () => {
+    await axios.put(`https://northwind.vercel.app/api/products/${productId}`, {
       name: nameValue,
       supplierId: supplierIdValue,
     });
@@ -76,6 +91,10 @@ const App = () => {
         </Button>
       </form>
 
+      <Button color="secondary" onClick={handleUpdate}>
+        Update
+      </Button>
+
       <TableContainer component={Paper}>
         {loading ? (
           <Spinner />
@@ -92,6 +111,7 @@ const App = () => {
                 <TableCell>Country</TableCell>
                 <TableCell>City</TableCell>
                 <TableCell>Delete</TableCell>
+                <TableCell>Edit</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -116,6 +136,15 @@ const App = () => {
                         onClick={() => deleteProduct(row.id)}
                       >
                         Delete
+                      </Button>
+                      <Button
+                        variant="contained"
+                        color="success"
+                        onClick={() =>
+                          editData(row.name, row.supplierId, row.id)
+                        }
+                      >
+                        Edit
                       </Button>
                     </TableCell>
                   </TableRow>
