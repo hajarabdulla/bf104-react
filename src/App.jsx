@@ -1,26 +1,23 @@
-import axios from "axios";
-import React, { useState } from "react";
-import useFetch from "./hooks/useFetch";
+import React from "react";
+import useButtons from "./hooks/useButtons";
 
 const App = () => {
-  const [show, setShow] = useState(true);
+  const [code, hideCode, showCode, toggleCode] = useButtons();
+  const [tech, hideTech, showTech, toggleTech] = useButtons();
 
-  const hideWord = () => {
-    setShow(false);
-  };
-  const showWord = () => {
-    setShow(true);
-  };
-  const toggleWord = () => {
-    setShow(!show);
-  };
   return (
     <>
-      <div>{show && "Code Academy"}</div>
+      <div>{code && "Code Academy"}</div>
 
-      <button onClick={hideWord}>Hide</button>
-      <button onClick={showWord}>Show</button>
-      <button onClick={toggleWord}>Toggle</button>
+      <button onClick={hideCode}>Hide</button>
+      <button onClick={showCode}>Show</button>
+      <button onClick={toggleCode}>Toggle</button>
+
+      <div>{tech && "Tech Academy"}</div>
+
+      <button onClick={hideTech}>Hide</button>
+      <button onClick={showTech}>Show</button>
+      <button onClick={toggleTech}>Toggle</button>
     </>
   );
 };
